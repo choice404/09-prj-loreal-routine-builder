@@ -1,11 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>L'Oréal | Smart Routine &amp; Product Advisor</title>
     <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap"
       rel="stylesheet"
     />
     <link
@@ -21,40 +21,96 @@
       <header class="site-header">
         <img src="img/loreal-logo.png" alt="L'Oréal Logo" class="logo" />
         <h1 class="site-title">Smart Routine &amp; Product Advisor</h1>
+        <p class="site-tagline">
+          Pick the products you want and get a routine built around them.
+        </p>
       </header>
 
-      <!-- Category Filter -->
-      <div class="search-section">
-        <select id="categoryFilter">
-          <option value="" disabled selected>Choose a Category</option>
-          <option value="cleanser">Cleansers</option>
-          <option value="moisturizer">Moisturizers & Treatments</option>
-          <option value="haircare">Haircare</option>
-          <option value="makeup">Makeup</option>
-          <option value="hair color">Hair Color</option>
-          <option value="hair styling">Hair Styling</option>
-          <option value="men's grooming">Men's Grooming</option>
-          <option value="suncare">Suncare</option>
-          <option value="fragrance">Fragrance</option>
-        </select>
-      </div>
+      <!-- Filter + Search -->
+      <section class="search-section" aria-label="Browse products">
+        <div class="filter-group">
+          <label for="categoryFilter" class="visually-hidden">Category</label>
+          <i class="fa-solid fa-filter filter-icon" aria-hidden="true"></i>
+          <select id="categoryFilter">
+            <option value="" disabled selected>Choose a Category</option>
+            <option value="all">All Categories</option>
+            <option value="cleanser">Cleansers</option>
+            <option value="moisturizer">Moisturizers &amp; Treatments</option>
+            <option value="skincare">Skincare</option>
+            <option value="haircare">Haircare</option>
+            <option value="makeup">Makeup</option>
+            <option value="hair color">Hair Color</option>
+            <option value="hair styling">Hair Styling</option>
+            <option value="men's grooming">Men's Grooming</option>
+            <option value="suncare">Suncare</option>
+            <option value="fragrance">Fragrance</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label for="productSearch" class="visually-hidden"
+            >Search products</label
+          >
+          <i
+            class="fa-solid fa-magnifying-glass filter-icon"
+            aria-hidden="true"
+          ></i>
+          <input
+            id="productSearch"
+            type="search"
+            placeholder="Search by name, brand, or keyword..."
+            autocomplete="off"
+          />
+        </div>
+      </section>
 
       <!-- Products Grid -->
-      <div id="productsContainer" class="products-grid"></div>
+      <div
+        id="productsContainer"
+        class="products-grid"
+        aria-live="polite"
+      ></div>
 
       <!-- Selected Products -->
-      <div class="selected-products">
-        <h2>Selected Products</h2>
-        <div id="selectedProductsList"></div>
-        <button id="generateRoutine" class="generate-btn">
-          <i class="fa-solid fa-wand-magic-sparkles"></i> Generate Routine
+      <section class="selected-products">
+        <div class="selected-header">
+          <h2>
+            <i class="fa-solid fa-sparkles" aria-hidden="true"></i>
+            Selected Products
+            <span id="selectedCount" class="selected-count">0</span>
+          </h2>
+          <button id="clearAll" class="clear-all" type="button">
+            <i class="fa-solid fa-trash-can"></i> Clear All
+          </button>
+        </div>
+        <div id="selectedProductsList" class="selected-list"></div>
+        <button id="generateRoutine" class="generate-btn" type="button">
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+          <span>Generate Routine</span>
         </button>
-      </div>
+      </section>
 
       <!------- Chat Area ------->
-      <section class="chatbox">
-        <h2>Let's Build Your Routine</h2>
-        <div id="chatWindow" class="chat-window"></div>
+      <section class="chatbox" aria-label="Chat with L'Oréal advisor">
+        <div class="chatbox-header">
+          <h2>
+            <i class="fa-solid fa-comments" aria-hidden="true"></i>
+            Let's Build Your Routine
+          </h2>
+          <button
+            id="saveCurrentRoutine"
+            class="save-routine-btn"
+            type="button"
+            hidden
+          >
+            <i class="fa-solid fa-bookmark"></i> Save Routine
+          </button>
+        </div>
+        <div
+          id="chatWindow"
+          class="chat-window"
+          role="log"
+          aria-live="polite"
+        ></div>
 
         <form id="chatForm" class="chat-form">
           <label for="userInput" class="visually-hidden">Message</label>
@@ -62,31 +118,129 @@
             id="userInput"
             name="userInput"
             type="text"
-            placeholder="Ask me about products or routines…"
+            placeholder="Ask a follow-up question..."
             autocomplete="off"
             required
           />
-          <button type="submit" id="sendBtn">
+          <button type="submit" id="sendBtn" aria-label="Send message">
             <i class="fa-solid fa-paper-plane"></i>
-            <span class="visually-hidden">Send</span>
           </button>
         </form>
+      </section>
+
+      <!-- Past Routines -->
+      <section id="pastRoutinesSection" class="past-routines" hidden>
+        <div class="past-routines-header">
+          <h2>
+            <i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i>
+            Saved Routines
+            <span id="pastRoutinesCount" class="past-routines-count">0</span>
+          </h2>
+          <button id="clearAllRoutines" class="clear-all" type="button">
+            <i class="fa-solid fa-trash-can"></i> Clear History
+          </button>
+        </div>
+        <div id="pastRoutinesList" class="past-routines-list"></div>
       </section>
 
       <!------- Footer Links ------->
       <footer class="site-footer">
         <p>&copy; 2025 L'Oréal. All rights reserved.</p>
         <nav>
-          <!-- These URLs are placeholders -->
-          <a href="#">Privacy Policy</a>
-          <a href="#">Terms of Use</a>
-          <a href="#">Contact</a>
+          <a
+            href="https://www.loreal.com/en/privacy-policy/"
+            target="_blank"
+            rel="noopener"
+            >Privacy Policy</a
+          >
+          <a
+            href="https://www.loreal.com/en/terms-of-use/"
+            target="_blank"
+            rel="noopener"
+            >Terms of Use</a
+          >
+          <a
+            href="https://www.loreal.com/en/contact/"
+            target="_blank"
+            rel="noopener"
+            >Contact</a
+          >
         </nav>
       </footer>
     </div>
 
-    <!-- secrets.js can be removed when using Cloudflare Workers for API requests -->
+    <!-- Confirm Modal -->
+    <div
+      id="confirmModal"
+      class="modal"
+      role="dialog"
+      aria-modal="true"
+      aria-hidden="true"
+    >
+      <div class="modal-backdrop" data-close-confirm></div>
+      <div class="modal-dialog confirm-dialog" role="document">
+        <h3 id="confirmTitle">Save current routine?</h3>
+        <p id="confirmMessage">
+          You have an active routine. Save it to history before starting a new
+          one?
+        </p>
+        <div class="confirm-actions">
+          <button id="confirmSave" class="confirm-btn primary" type="button">
+            <i class="fa-solid fa-bookmark"></i> Save
+          </button>
+          <button id="confirmDiscard" class="confirm-btn danger" type="button">
+            <i class="fa-solid fa-trash-can"></i> Discard
+          </button>
+          <button
+            id="confirmCancel"
+            class="confirm-btn ghost"
+            type="button"
+            data-close-confirm
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Description Modal -->
+    <div
+      id="descriptionModal"
+      class="modal"
+      role="dialog"
+      aria-modal="true"
+      aria-hidden="true"
+    >
+      <div class="modal-backdrop" data-close-modal></div>
+      <div class="modal-dialog" role="document">
+        <button
+          class="modal-close"
+          type="button"
+          data-close-modal
+          aria-label="Close"
+        >
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+        <div class="modal-body">
+          <img id="modalImage" src="" alt="" />
+          <div class="modal-info">
+            <p id="modalBrand" class="modal-brand"></p>
+            <h3 id="modalName" class="modal-name"></h3>
+            <p id="modalCategory" class="modal-category"></p>
+            <p id="modalDescription" class="modal-description"></p>
+            <button
+              id="modalToggleSelect"
+              class="modal-select"
+              type="button"
+            ></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- secrets.js only used as fallback for local dev; production uses Cloudflare Worker -->
     <script src="secrets.js"></script>
+    <script src="rtl-detector.js"></script>
     <script src="script.js"></script>
   </body>
 </html>

@@ -1,141 +1,1247 @@
-/* —— basic reset —— */
+/* === L'Oréal Brand Tokens === */
+:root {
+  --loreal-red: #ff003b;
+  --loreal-red-dark: #cc002f;
+  --loreal-gold: #e3a535;
+  --loreal-gold-dark: #b8861f;
+  --loreal-black: #1a1a1a;
+  --loreal-ink: #2d2d2d;
+  --loreal-muted: #6b6b6b;
+  --loreal-line: #e6e1dc;
+  --loreal-cream: #faf6f1;
+  --loreal-surface: #ffffff;
+  --loreal-soft: #f5efe6;
+  --shadow-sm: 0 2px 6px rgba(26, 26, 26, 0.06);
+  --shadow-md: 0 8px 24px rgba(26, 26, 26, 0.08);
+  --shadow-lg: 0 18px 48px rgba(26, 26, 26, 0.12);
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --transition: 0.25s ease;
+}
+
+/* === Reset === */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-/* —— body + fonts —— */
+html,
+body {
+  min-height: 100vh;
+}
+
 body {
   font-family: "Montserrat", Arial, Helvetica, sans-serif;
-  color: #333;
+  color: var(--loreal-ink);
+  background:
+    radial-gradient(circle at 10% 0%, rgba(227, 165, 53, 0.08), transparent 45%),
+    radial-gradient(circle at 90% 10%, rgba(255, 0, 59, 0.06), transparent 45%),
+    var(--loreal-cream);
   display: flex;
   justify-content: center;
+  line-height: 1.5;
 }
 
 .page-wrapper {
-  width: 90%;
-  max-width: 900px;
+  width: 92%;
+  max-width: 1100px;
+  padding-bottom: 40px;
 }
 
-/* header */
+/* === Header === */
 .site-header {
   text-align: center;
-  padding-top: 50px;
-  padding-bottom: 10px;
+  padding: 36px 0 8px;
+  position: relative;
 }
 
 .logo {
-  width: 250px;
-  margin-bottom: 15px;
+  width: 220px;
+  margin: 10px auto 18px;
+  display: block;
 }
 
 .site-title {
-  font-size: 22px;
-  font-weight: 500;
-  margin-bottom: 10px;
+  font-family: "Playfair Display", serif;
+  font-weight: 700;
+  font-size: 34px;
+  color: var(--loreal-black);
+  letter-spacing: 0.01em;
 }
 
-/* category filter */
+.site-title::after {
+  content: "";
+  display: block;
+  width: 64px;
+  height: 3px;
+  margin: 14px auto 0;
+  background: linear-gradient(90deg, var(--loreal-red), var(--loreal-gold));
+  border-radius: 2px;
+}
+
+.site-tagline {
+  max-width: 560px;
+  margin: 18px auto 0;
+  color: var(--loreal-muted);
+  font-size: 15px;
+}
+
+/* === Search & Filter === */
 .search-section {
-  margin: 30px 0;
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) 2fr;
+  gap: 14px;
+  margin: 40px 0 28px;
+}
+
+.filter-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.filter-icon {
+  position: absolute;
+  left: 18px;
+  color: var(--loreal-muted);
+  font-size: 14px;
+  pointer-events: none;
+}
+
+[dir="rtl"] .filter-icon {
+  left: auto;
+  right: 18px;
+}
+
+.search-section select,
+.search-section input[type="search"] {
+  width: 100%;
+  padding: 14px 18px 14px 44px;
+  font-size: 15px;
+  font-family: inherit;
+  border: 1px solid var(--loreal-line);
+  border-radius: var(--radius-md);
+  background: var(--loreal-surface);
+  color: var(--loreal-ink);
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: var(--shadow-sm);
+}
+
+[dir="rtl"] .search-section select,
+[dir="rtl"] .search-section input[type="search"] {
+  padding: 14px 44px 14px 18px;
+}
+
+.search-section input[type="search"] {
+  cursor: text;
+}
+
+.search-section select:focus,
+.search-section input[type="search"]:focus {
+  outline: none;
+  border-color: var(--loreal-gold);
+  box-shadow: 0 0 0 3px rgba(227, 165, 53, 0.2);
+}
+
+/* === Products Grid === */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 18px;
+  margin-bottom: 40px;
+  min-height: 180px;
+}
+
+.placeholder-message,
+.empty-message {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--loreal-muted);
+  font-size: 16px;
+  background: var(--loreal-surface);
+  border: 1px dashed var(--loreal-line);
+  border-radius: var(--radius-md);
+}
+
+.product-card {
+  position: relative;
+  background: var(--loreal-surface);
+  border: 1px solid var(--loreal-line);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.product-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-md);
+  border: 2px solid transparent;
+  pointer-events: none;
+  transition: var(--transition);
+}
+
+.product-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--loreal-gold);
+}
+
+.product-card.selected {
+  border-color: var(--loreal-red);
+  background: linear-gradient(180deg, #fff, #fff7f9);
+}
+
+.product-card.selected::before {
+  border-color: var(--loreal-red);
+}
+
+.product-card .selected-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--loreal-red);
+  color: #fff;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  box-shadow: var(--shadow-sm);
+  z-index: 2;
+}
+
+[dir="rtl"] .product-card .selected-badge {
+  right: auto;
+  left: 12px;
+}
+
+.product-card.selected .selected-badge {
   display: flex;
 }
 
-.search-section select {
-  width: 100%;
-  padding: 16px;
-  font-size: 18px;
-  border: 2px solid #000;
-  border-radius: 8px;
+.product-card .image-wrap {
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--loreal-soft);
+  border-radius: var(--radius-sm);
+  padding: 10px;
+}
+
+.product-card img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.product-card .product-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.product-card .brand {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--loreal-gold-dark);
+  font-weight: 600;
+}
+
+.product-card h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--loreal-black);
+  line-height: 1.35;
+}
+
+.product-card .category-tag {
+  font-size: 11px;
+  color: var(--loreal-muted);
+  text-transform: capitalize;
+  margin-top: auto;
+}
+
+.product-card .card-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.card-actions button {
+  flex: 1;
+  padding: 9px 10px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-radius: var(--radius-sm);
   cursor: pointer;
-  background-color: white;
-  font-weight: 500;
+  transition: var(--transition);
+  border: 1px solid var(--loreal-line);
+  background: var(--loreal-surface);
+  color: var(--loreal-ink);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
 }
 
-.search-section select:focus {
-  outline: none;
-  border-color: #666;
+.card-actions .info-btn:hover {
+  border-color: var(--loreal-gold);
+  color: var(--loreal-gold-dark);
 }
 
-/* chat section */
-.chatbox {
-  margin: 40px 0;
-  border: 2px solid #000;
-  border-radius: 8px;
+.card-actions .select-btn {
+  background: var(--loreal-black);
+  color: #fff;
+  border-color: var(--loreal-black);
+}
+
+.card-actions .select-btn:hover {
+  background: var(--loreal-red);
+  border-color: var(--loreal-red);
+}
+
+.product-card.selected .card-actions .select-btn {
+  background: var(--loreal-red);
+  border-color: var(--loreal-red);
+}
+
+/* === Selected Products === */
+.selected-products {
+  background: var(--loreal-surface);
+  border: 1px solid var(--loreal-line);
+  border-radius: var(--radius-lg);
   padding: 26px;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 40px;
+}
+
+.selected-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.selected-header h2 {
+  font-family: "Playfair Display", serif;
+  font-size: 22px;
+  color: var(--loreal-black);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.selected-header h2 i {
+  color: var(--loreal-gold);
+  font-size: 18px;
+}
+
+.selected-count {
+  background: var(--loreal-red);
+  color: #fff;
+  font-family: "Montserrat", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 10px;
+  border-radius: 999px;
+  min-width: 26px;
+  text-align: center;
+}
+
+.clear-all {
+  background: transparent;
+  color: var(--loreal-muted);
+  border: 1px solid var(--loreal-line);
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: var(--transition);
+}
+
+.clear-all:hover {
+  color: var(--loreal-red);
+  border-color: var(--loreal-red);
+}
+
+.selected-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  min-height: 52px;
+  padding: 8px;
+  background: var(--loreal-cream);
+  border-radius: var(--radius-md);
+}
+
+.selected-list:empty::before {
+  content: "No products selected yet. Tap a product above to add it.";
+  color: var(--loreal-muted);
+  font-size: 14px;
+  font-style: italic;
+  padding: 12px 16px;
+}
+
+.selected-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--loreal-surface);
+  border: 1px solid var(--loreal-line);
+  padding: 6px 6px 6px 10px;
+  border-radius: 999px;
+  font-size: 13px;
+  box-shadow: var(--shadow-sm);
+  max-width: 100%;
+}
+
+.selected-chip img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  background: var(--loreal-soft);
+  border-radius: 50%;
+  padding: 3px;
+}
+
+.selected-chip .chip-name {
+  font-weight: 500;
+  color: var(--loreal-ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 180px;
+}
+
+.selected-chip .chip-brand {
+  color: var(--loreal-gold-dark);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+}
+
+.selected-chip button {
+  background: var(--loreal-soft);
+  border: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--loreal-muted);
+  transition: var(--transition);
+}
+
+.selected-chip button:hover {
+  background: var(--loreal-red);
+  color: #fff;
+}
+
+.generate-btn {
+  width: 100%;
+  margin-top: 20px;
+  padding: 16px;
+  font-size: 15px;
+  font-family: inherit;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+  background: linear-gradient(135deg, var(--loreal-red) 0%, var(--loreal-red-dark) 100%);
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 8px 20px rgba(255, 0, 59, 0.25);
+}
+
+.generate-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(255, 0, 59, 0.35);
+}
+
+.generate-btn:disabled {
+  background: #c9c9c9;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+/* === Chat === */
+.chatbox {
+  background: var(--loreal-surface);
+  border: 1px solid var(--loreal-line);
+  border-radius: var(--radius-lg);
+  padding: 26px;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 40px;
 }
 
 .chatbox h2 {
-  font-size: 20px;
-  margin-bottom: 20px;
+  font-family: "Playfair Display", serif;
+  font-size: 22px;
+  margin-bottom: 18px;
+  color: var(--loreal-black);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.chatbox h2 i {
+  color: var(--loreal-red);
+  font-size: 18px;
 }
 
 .chat-window {
+  height: 400px;
   padding: 20px;
-  font-size: 18px;
-  line-height: 1.5;
-  height: 250px;
+  font-size: 15px;
+  line-height: 1.6;
   overflow-y: auto;
-  background: #fafafa;
-  margin-bottom: 20px;
+  background: var(--loreal-cream);
+  border-radius: var(--radius-md);
+  margin-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-/* placeholder message */
-.placeholder-message {
-  width: 100%;
+.chat-window::-webkit-scrollbar {
+  width: 8px;
+}
+
+.chat-window::-webkit-scrollbar-thumb {
+  background: var(--loreal-line);
+  border-radius: 4px;
+}
+
+.chat-placeholder {
+  margin: auto;
   text-align: center;
-  padding: 40px;
-  color: #666;
-  font-size: 18px;
+  color: var(--loreal-muted);
+  font-size: 14px;
+  max-width: 340px;
+  padding: 20px;
 }
 
-/* input row */
+.chat-placeholder i {
+  display: block;
+  font-size: 30px;
+  color: var(--loreal-gold);
+  margin-bottom: 14px;
+}
+
+.msg {
+  max-width: 82%;
+  padding: 12px 16px;
+  border-radius: 18px;
+  line-height: 1.55;
+  word-wrap: break-word;
+  white-space: pre-line;
+  font-size: 14.5px;
+  box-shadow: var(--shadow-sm);
+  animation: fadeSlide 0.3s ease;
+}
+
+@keyframes fadeSlide {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.msg.user {
+  align-self: flex-end;
+  background: linear-gradient(135deg, #fff4e0 0%, #fde2d2 100%);
+  color: var(--loreal-ink);
+  border: 1px solid rgba(227, 165, 53, 0.35);
+  border-bottom-right-radius: 4px;
+}
+
+.msg.user strong {
+  color: var(--loreal-red);
+}
+
+[dir="rtl"] .msg.user {
+  border-bottom-right-radius: 18px;
+  border-bottom-left-radius: 4px;
+}
+
+.msg.ai {
+  align-self: flex-start;
+  background: #fff;
+  color: var(--loreal-ink);
+  border: 1px solid var(--loreal-line);
+  border-bottom-left-radius: 4px;
+}
+
+[dir="rtl"] .msg.ai {
+  border-bottom-left-radius: 18px;
+  border-bottom-right-radius: 4px;
+}
+
+.msg.ai.routine {
+  background: #fff;
+  border-color: var(--loreal-line);
+}
+
+.next-section-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  margin-top: 16px;
+  padding: 9px 16px;
+  border-radius: 999px;
+  border: 1.5px solid var(--loreal-red);
+  background: #fff;
+  color: var(--loreal-red);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: var(--shadow-sm);
+  clear: both;
+}
+
+.next-section-btn:hover:not(:disabled) {
+  background: var(--loreal-red);
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(255, 0, 59, 0.2);
+}
+
+.next-section-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+[dir="rtl"] .next-section-btn i {
+  transform: scaleX(-1);
+}
+
+.msg.ai strong {
+  color: var(--loreal-black);
+}
+
+.msg.ai a {
+  color: var(--loreal-red);
+  word-break: break-all;
+}
+
+.msg.ai.loading {
+  color: var(--loreal-muted);
+  font-style: italic;
+}
+
+.msg.ai .citations {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--loreal-line);
+  font-size: 12px;
+  color: var(--loreal-muted);
+}
+
+.msg.ai .citations a {
+  display: block;
+  margin-top: 4px;
+}
+
+.typing-dots {
+  display: inline-flex;
+  gap: 4px;
+}
+
+.typing-dots span {
+  width: 7px;
+  height: 7px;
+  background: var(--loreal-gold);
+  border-radius: 50%;
+  animation: typing 1.2s infinite ease-in-out;
+}
+
+.typing-dots span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.typing-dots span:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes typing {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+  30% { transform: translateY(-4px); opacity: 1; }
+}
+
 .chat-form {
   display: flex;
-  gap: 12px;
-  margin-top: 16px;
+  gap: 10px;
 }
 
 .chat-form input {
   flex: 1;
-  padding: 12px;
-  font-size: 18px;
-  border: none;
-  border-bottom: 2px solid #ccc;
-  background: transparent;
+  padding: 14px 18px;
+  font-family: inherit;
+  font-size: 15px;
+  border: 1px solid var(--loreal-line);
+  border-radius: 999px;
+  background: var(--loreal-cream);
+  transition: var(--transition);
 }
 
 .chat-form input:focus {
   outline: none;
-  border-bottom-color: #000;
+  border-color: var(--loreal-red);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(255, 0, 59, 0.12);
 }
 
 .chat-form button {
-  font-size: 18px;
-  background: #000;
+  background: var(--loreal-red);
   color: #fff;
   border: none;
-  padding: 12px;
-  width: 48px;
-  height: 48px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background 0.3s;
+  font-size: 16px;
+  transition: var(--transition);
+  box-shadow: 0 6px 14px rgba(255, 0, 59, 0.25);
 }
 
-.chat-form button:hover {
-  background: #666666;
+.chat-form button:hover:not(:disabled) {
+  background: var(--loreal-red-dark);
+  transform: scale(1.04);
 }
 
-.chat-form button:focus {
-  outline: 2px solid #000;
+.chat-form button:disabled {
+  background: #c9c9c9;
+  box-shadow: none;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.chat-form button:focus-visible {
+  outline: 2px solid var(--loreal-gold);
   outline-offset: 2px;
 }
 
-/* visually hidden */
+/* === Modal === */
+.modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 20px;
+}
+
+.modal.open {
+  display: flex;
+}
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(26, 26, 26, 0.55);
+  backdrop-filter: blur(2px);
+}
+
+.modal-dialog {
+  position: relative;
+  background: #fff;
+  border-radius: var(--radius-lg);
+  max-width: 640px;
+  width: 100%;
+  max-height: 90vh;
+  overflow: auto;
+  box-shadow: var(--shadow-lg);
+  padding: 30px;
+  animation: fadeSlide 0.25s ease;
+}
+
+.modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: var(--loreal-soft);
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 16px;
+  color: var(--loreal-ink);
+  transition: var(--transition);
+}
+
+[dir="rtl"] .modal-close {
+  right: auto;
+  left: 14px;
+}
+
+.modal-close:hover {
+  background: var(--loreal-red);
+  color: #fff;
+}
+
+.modal-body {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 24px;
+  align-items: start;
+  margin-top: 6px;
+}
+
+#modalImage {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: contain;
+  background: var(--loreal-soft);
+  border-radius: var(--radius-md);
+  padding: 16px;
+}
+
+.modal-brand {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--loreal-gold-dark);
+  font-weight: 600;
+}
+
+.modal-name {
+  font-family: "Playfair Display", serif;
+  font-size: 22px;
+  color: var(--loreal-black);
+  margin: 6px 0 4px;
+}
+
+.modal-category {
+  font-size: 12px;
+  color: var(--loreal-muted);
+  text-transform: capitalize;
+  margin-bottom: 14px;
+}
+
+.modal-description {
+  color: var(--loreal-ink);
+  font-size: 14px;
+  line-height: 1.65;
+  margin-bottom: 18px;
+}
+
+.modal-select {
+  padding: 12px 22px;
+  background: var(--loreal-black);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.modal-select:hover {
+  background: var(--loreal-red);
+}
+
+.modal-select.is-selected {
+  background: var(--loreal-red);
+}
+
+.modal-select.is-selected:hover {
+  background: var(--loreal-red-dark);
+}
+
+/* === Chatbox header & save button === */
+.chatbox-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.chatbox-header h2 {
+  margin-bottom: 0;
+}
+
+.save-routine-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1.5px solid var(--loreal-gold);
+  background: #fff;
+  color: var(--loreal-gold-dark);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.save-routine-btn:hover {
+  background: var(--loreal-gold);
+  color: #fff;
+}
+
+.save-routine-btn.is-saved {
+  border-color: var(--loreal-line);
+  color: var(--loreal-muted);
+  background: var(--loreal-cream);
+  cursor: default;
+}
+
+.save-routine-btn.is-saved:hover {
+  background: var(--loreal-cream);
+  color: var(--loreal-muted);
+}
+
+/* === Past routines === */
+.past-routines {
+  background: var(--loreal-surface);
+  border: 1px solid var(--loreal-line);
+  border-radius: var(--radius-lg);
+  padding: 26px;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 40px;
+}
+
+.past-routines-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.past-routines-header h2 {
+  font-family: "Playfair Display", serif;
+  font-size: 22px;
+  color: var(--loreal-black);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.past-routines-header h2 i {
+  color: var(--loreal-gold);
+  font-size: 18px;
+}
+
+.past-routines-count {
+  background: var(--loreal-soft);
+  color: var(--loreal-ink);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 10px;
+  border-radius: 999px;
+  min-width: 26px;
+  text-align: center;
+}
+
+.past-routines-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px;
+}
+
+.past-routine {
+  display: flex;
+  align-items: stretch;
+  background: var(--loreal-cream);
+  border: 1px solid var(--loreal-line);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: var(--transition);
+  cursor: pointer;
+}
+
+.past-routine:hover {
+  border-color: var(--loreal-gold);
+  box-shadow: var(--shadow-sm);
+}
+
+.past-routine:focus-visible {
+  outline: 2px solid var(--loreal-gold);
+  outline-offset: 2px;
+}
+
+.past-routine.is-active {
+  border-color: var(--loreal-red);
+  background: #fff7f9;
+}
+
+.past-routine-body {
+  flex: 1;
+  text-align: left;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.past-routine-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.past-routine-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--loreal-black);
+  cursor: text;
+  padding: 2px 4px;
+  margin: -2px -4px;
+  border-radius: 4px;
+  transition: var(--transition);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.past-routine-title:hover {
+  background: rgba(227, 165, 53, 0.15);
+  box-shadow: inset 0 -1px 0 var(--loreal-gold);
+}
+
+.past-routine-pen {
+  color: var(--loreal-muted);
+  font-size: 11px;
+  opacity: 0;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.past-routine:hover .past-routine-pen {
+  opacity: 0.8;
+}
+
+.past-routine-pen:hover {
+  opacity: 1 !important;
+  color: var(--loreal-gold-dark);
+}
+
+.past-routine-title-input {
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--loreal-black);
+  border: 1.5px solid var(--loreal-gold);
+  border-radius: 6px;
+  padding: 4px 8px;
+  background: #fff;
+  outline: none;
+  width: 100%;
+  min-width: 0;
+}
+
+.past-routine-title-input:focus {
+  border-color: var(--loreal-red);
+  box-shadow: 0 0 0 3px rgba(255, 0, 59, 0.15);
+}
+
+.past-routine-meta {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-size: 11px;
+  color: var(--loreal-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.past-routine-meta i {
+  margin-right: 4px;
+}
+
+.active-pill {
+  background: var(--loreal-red);
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+}
+
+.past-routine-delete {
+  background: transparent;
+  border: none;
+  border-left: 1px solid var(--loreal-line);
+  padding: 0 14px;
+  color: var(--loreal-muted);
+  cursor: pointer;
+  font-size: 14px;
+  transition: var(--transition);
+}
+
+[dir="rtl"] .past-routine-delete {
+  border-left: none;
+  border-right: 1px solid var(--loreal-line);
+}
+
+.past-routine-delete:hover {
+  background: var(--loreal-red);
+  color: #fff;
+}
+
+/* === Confirm dialog === */
+.confirm-dialog {
+  max-width: 460px;
+  padding: 28px;
+  text-align: center;
+}
+
+.confirm-dialog h3 {
+  font-family: "Playfair Display", serif;
+  font-size: 22px;
+  color: var(--loreal-black);
+  margin-bottom: 10px;
+}
+
+.confirm-dialog p {
+  color: var(--loreal-muted);
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 22px;
+}
+
+.confirm-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.confirm-btn {
+  padding: 11px 18px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1.5px solid transparent;
+}
+
+.confirm-btn.primary {
+  background: var(--loreal-red);
+  color: #fff;
+  border-color: var(--loreal-red);
+}
+
+.confirm-btn.primary:hover {
+  background: var(--loreal-red-dark);
+  border-color: var(--loreal-red-dark);
+}
+
+.confirm-btn.danger {
+  background: #fff;
+  color: var(--loreal-ink);
+  border-color: var(--loreal-line);
+}
+
+.confirm-btn.danger:hover {
+  border-color: var(--loreal-ink);
+  background: var(--loreal-soft);
+}
+
+.confirm-btn.ghost {
+  background: transparent;
+  color: var(--loreal-muted);
+  border-color: transparent;
+}
+
+.confirm-btn.ghost:hover {
+  color: var(--loreal-ink);
+}
+
+/* === Footer === */
+.site-footer {
+  text-align: center;
+  font-size: 13px;
+  color: var(--loreal-muted);
+  padding-top: 30px;
+  border-top: 1px solid var(--loreal-line);
+}
+
+.site-footer nav {
+  margin-top: 10px;
+}
+
+.site-footer a {
+  margin: 0 10px;
+  color: var(--loreal-ink);
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.site-footer a:hover {
+  color: var(--loreal-red);
+}
+
+/* === Utility === */
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -148,108 +1254,45 @@ body {
   border: 0;
 }
 
-/* footer */
-.site-footer {
-  margin: 60px 0 40px;
-  text-align: center;
-  font-size: 14px;
-  color: #666;
+/* === Responsive === */
+@media (max-width: 720px) {
+  .site-title {
+    font-size: 26px;
+  }
+
+  .search-section {
+    grid-template-columns: 1fr;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
+
+  .modal-body {
+    grid-template-columns: 1fr;
+  }
+
+  #modalImage {
+    max-width: 160px;
+    margin: 0 auto;
+  }
+
+  .chat-window {
+    height: 340px;
+  }
+
+  .msg {
+    max-width: 92%;
+  }
 }
 
-.site-footer nav {
-  margin-top: 12px;
-}
+@media (max-width: 460px) {
+  .selected-chip .chip-name {
+    max-width: 110px;
+  }
 
-.site-footer a {
-  margin: 0 8px;
-  color: #000;
-  text-decoration: none;
-}
-
-.site-footer a:hover {
-  color: #666666;
-}
-
-/* products grid */
-.products-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  margin: 30px 0;
-}
-
-.product-card {
-  flex: 0 1 calc(33.333% - 14px);
-  border: 1px solid #ccc;
-  padding: 15px;
-  border-radius: 4px;
-  display: flex;
-  gap: 15px;
-  min-height: 160px;
-}
-
-.product-card img {
-  width: 110px;
-  height: 110px;
-  object-fit: contain;
-  flex-shrink: 0;
-}
-
-.product-card .product-info {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-height: 110px;
-}
-
-.product-card h3 {
-  font-size: 16px;
-  margin-bottom: 8px;
-}
-
-.product-card p {
-  font-size: 14px;
-  color: #666;
-}
-
-/* selected products */
-.selected-products {
-  margin: 40px 0;
-  padding: 20px;
-  border: 2px solid #000;
-  border-radius: 8px;
-}
-
-.selected-products h2 {
-  font-size: 20px;
-  margin-bottom: 20px;
-}
-
-#selectedProductsList {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.generate-btn {
-  width: 100%;
-  margin-top: 20px;
-  padding: 16px;
-  font-size: 18px;
-  font-weight: 500;
-  color: #fff;
-  background: #000;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-.generate-btn:hover {
-  background: #666;
-}
-
-.generate-btn i {
-  margin-right: 8px;
+  .card-actions button {
+    font-size: 11px;
+    padding: 8px 6px;
+  }
 }
